@@ -4,21 +4,10 @@ import { nanoid } from "nanoid";
 
 const App = () => {
   const [count, setCount] = useState(1);
-  const [text, setText] = useState("");
+  const [text, setText] = useState([]);
 
-  const handleChange = () => {
-    if (count >= 8) {
-      setCount(1);
-      return;
-    }
-    if (count <= 0) {
-      setCount(1);
-      return;
-    }
-    setCount((currentValue) => {
-      const newValue = currentValue + 1;
-      return newValue;
-    });
+  const handleChange = (e) => {
+    setCount(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -33,8 +22,9 @@ const App = () => {
       <form className="lorem-form" onSubmit={handleSubmit}>
         <label htmlFor="number-input">Párrafos:</label>
         <input
-          max={8}
-          min={1}
+          max="8"
+          min="1"
+          step="1"
           type="number"
           name="number-input"
           value={count}
@@ -44,14 +34,11 @@ const App = () => {
           Enviar
         </button>
       </form>
-      {text &&
-        text.map((paragraph) => {
-          return (
-            <div className="lorem-text">
-              <p key={nanoid()}>{paragraph}</p>
-            </div>
-          );
+      <article className="lorem-text">
+        {text.map((paragraph) => {
+          return <p key={nanoid()}>{paragraph}</p>;
         })}
+      </article>
     </section>
   );
 };
